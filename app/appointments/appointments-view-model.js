@@ -1,7 +1,8 @@
 const calendarModule = require("nativescript-ui-calendar");
 const observableModule = require("tns-core-modules/data/observable");
-const Kinvey = require("kinvey-nativescript-sdk").Kinvey;
+const Kinvey = require('kinvey-nativescript-sdk');
 const topmost = require("ui/frame").topmost;
+const dataStore = Kinvey.DataStore.collection("Appointments", Kinvey.DataStoreType.Sync);
 
 function AppointmentsViewModel() {
     const viewModel = observableModule.fromObject({
@@ -37,8 +38,8 @@ function AppointmentsViewModel() {
             console.log("onDateSelected: " + args.date);
         },
         onNavigatedToDate: function (event) {
-            //   console.log(event.object.view);
-            this.navCal(event.eventData.title);
+            //console.log(event.eventData.id);
+            this.navCal(event.eventData.id);
             //console.log("date: " +);
         },
         navCal: function (title) {
@@ -56,7 +57,6 @@ function AppointmentsViewModel() {
             });
         },
         onNavigatedTo: function (args) {
-            const dataStore = Kinvey.DataStore.collection("Appointments", Kinvey.DataStoreType.Sync);
 
             dataStore.pull().then((entities) => {
                     //console.log(entities);
@@ -72,7 +72,6 @@ function AppointmentsViewModel() {
             // Get reference to the PullToRefresh component;
             var pullRefresh = args.object;
 
-            const dataStore = Kinvey.DataStore.collection("Appointments", Kinvey.DataStoreType.Sync);
             //dataStore.push();
 
             dataStore.push().then((entities) => {
@@ -99,7 +98,6 @@ function AppointmentsViewModel() {
         },
         contentLoaded: function () {
             let that = this;
-            const dataStore = Kinvey.DataStore.collection("Appointments", Kinvey.DataStoreType.Sync);
             const subscription = dataStore.find()
                 .subscribe((entities) => {
                         //         console.log("Retrieved : " + JSON.stringify(entities));
@@ -109,8 +107,9 @@ function AppointmentsViewModel() {
                             let newEnt = {};
                             //console.log(ent);
                             let sdate = new Date(ent["date"]);
-                            let calTitle = `${ent["custName"]}, ${ent["issueType"]} job#${ent["_id"]}`;
-                            const event = new calendarModule.CalendarEvent(calTitle, sdate, new Date(Date.parse(sdate) + 3600000));
+                            let calTitle = `${ent["custName"]}, ${ent["issueType"]}`;
+                            //  const event = new calendarModule.CalendarEvent(calTitle, sdate, new Date(Date.parse(sdate) + 3600000));
+                            const event = new CustomEvent(ent["_id"], calTitle, sdate, new Date(Date.parse(sdate) + 3600000));
 
                             newEnt["_id"] = ent["_id"];
                             newEnt["id"] = ent["custID"];
@@ -130,9 +129,10 @@ function AppointmentsViewModel() {
                             newEnt["price"] = ent["Price"];
                             newEnt["lat"] = ent["ackGeoLat"];
                             newEnt["long"] = ent["ackGeoLong"];
+                            newEnt["eventX"] = new Array(event);
                             //console.log(newEnt);
                             //let kvp = {};
-                            nitems[calTitle] = newEnt;
+                            nitems[ent["_id"]] = newEnt;
 
                             if (ent["status"] !== "3") {
                                 console.log("3equals: " + ent["status"]);
@@ -158,6 +158,13 @@ function AppointmentsViewModel() {
     });
 
     return viewModel;
+}
+
+class CustomEvent extends calendarModule.CalendarEvent {
+    constructor(id, title, startDate, endDate, isAllDay, eventColor) {
+        super(title, startDate, endDate, isAllDay, eventColor);
+        this.id = id;
+    }
 }
 
 module.exports = AppointmentsViewModel;

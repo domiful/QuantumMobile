@@ -1,5 +1,5 @@
 const dialogs = require("tns-core-modules/ui/dialogs");
-const Kinvey = require("kinvey-nativescript-sdk").Kinvey;
+const Kinvey = require('kinvey-nativescript-sdk');
 const nativescript_locate_address_1 = require("nativescript-locate-address");
 
 function onNavigatingTo(args) {

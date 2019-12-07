@@ -1,40 +1,32 @@
-<Page class="page" navigatingTo="onNavigatingTo" navigatingTo="onNavigatingTo" navigatedTo="{{onNavigatedTo}}" actionBarHidden="false" xmlns="http://schemas.nativescript.org/tns.xsd" xmlns:PullRefresh="nativescript-pulltorefresh" xmlns:calendar="nativescript-ui-calendar">
+<Page class="page" navigatingTo="onNavigatingTo" navigatingTo="onNavigatingTo" navigatedTo="{{onNavigatedTo}}" actionBarHidden="false" xmlns="http://schemas.nativescript.org/tns.xsd" xmlns:PullRefresh="@nstudio/nativescript-pulltorefresh" xmlns:calendar="nativescript-ui-calendar">
   <ActionBar class="action-bar" flat="true" title="{{ title }}"></ActionBar>
   <StackLayout orientation="vertical" class="under-action-bar">
     <StackLayout orientation="vertical" class="action-bar-title">
-      <GridLayout class="page-content" rows="40, *" columns="*">
-        <SegmentedBar row="0" loaded="{{ sbLoaded }}" class="m-5 calendarBar" selectedIndex="{{ sbSelectedIndex }}">
-          <SegmentedBar.items>
-            <SegmentedBarItem title="Month" />
-            <SegmentedBarItem title="Week" />
-          </SegmentedBar.items>
-        </SegmentedBar>
-        <GridLayout row="1" visibility="{{ visibility1 ? 'visible' : 'collapsed' }}" backgroundColor="white">
-          <PullRefresh:PullToRefresh refresh="{{refreshList}}">
-            <calendar:RadCalendar id="calendar" eventSource="{{ events }}" eventsViewMode="Inline" selectionMode="Single" viewMode="{{calViewMode}}" transitionMode="Stack" locale="en-US" dateSelected="{{onDateSelected}}" dateDeselected="onDateDeselected" inlineEventSelected="{{onNavigatedToDate}}" navigatingToDateStarted="onNavigatingToDateStarted" viewModeChanged="onViewModeChanged">
-              <calendar:RadCalendar.monthViewStyle>
-                <calendar:CalendarMonthViewStyle backgroundColor="Gray" showTitle="true" showWeekNumbers="true" showDayNames="true" selectionShapeColor="purple">
-                  <calendar:CalendarMonthViewStyle.dayCellStyle>
-                    <calendar:DayCellStyle showEventsText="true" eventTextColor="White" eventFontName="Times New Roman" eventFontStyle="BoldItalic" eventTextSize="8" ios:cellTextSize="12" android:cellTextSize="10" />
-                  </calendar:CalendarMonthViewStyle.dayCellStyle>
-                  <calendar:CalendarMonthviewStyle.inlineEventCellStyle>
-                    <calendar:InlineEventCellStyle eventTextColor="White" eventTextSize="18" timeTextColor="Black" timeTextSize="14" />
-                  </calendar:CalendarMonthviewStyle.inlineEventCellStyle>
-                </calendar:CalendarMonthViewStyle>
-              </calendar:RadCalendar.monthViewStyle>
-            </calendar:RadCalendar>
-          </PullRefresh:PullToRefresh> <!-- Event view mode can be one of "None", "Inline" or "Popover" -->
-          <!-- Selection mode can be one of "None", "Single", "Multiple" or "Range" -->
-          <!-- View mode can be one of "Week", "Month", "MonthNames", "Year" or "Day" -->
-          <!-- Available transition modes
+      <GridLayout row="1" visibility="{{ visibility1 ? 'visible' : 'collapsed' }}" backgroundColor="white">
+        <PullRefresh:PullToRefresh refresh="{{refreshList}}">
+          <calendar:RadCalendar id="calendar" eventSource="{{ events }}" eventsViewMode="Inline" selectionMode="Single" viewMode="{{calViewMode}}" transitionMode="Stack" locale="en-US" dateSelected="{{onDateSelected}}" dateDeselected="onDateDeselected" inlineEventSelected="{{onNavigatedToDate}}" navigatingToDateStarted="onNavigatingToDateStarted" viewModeChanged="onViewModeChanged">
+            <calendar:RadCalendar.monthViewStyle>
+              <calendar:CalendarMonthViewStyle backgroundColor="#8C8F91" showTitle="true" showWeekNumbers="false" showDayNames="true" selectionShapeColor="#00B4C9">
+                <calendar:CalendarMonthViewStyle.dayCellStyle>
+                  <calendar:DayCellStyle showEventsText="true" eventTextColor="#00B4C9" cellTextColor="#00B4C9" eventFontName="Times New Roman" eventFontStyle="BoldItalic" eventTextSize="8" ios:cellTextSize="12" android:cellTextSize="14" />
+                </calendar:CalendarMonthViewStyle.dayCellStyle>
+                <calendar:CalendarMonthviewStyle.inlineEventCellStyle>
+                  <calendar:InlineEventCellStyle cellBackgroundColor="#E9E9E9" eventTextColor="#00B4C9" eventFontName="Avenir" eventFontStyle="BoldItalic" eventTextSize="18" timeTextColor="DeepSkyBlue" timeFontName="Courier" timeFontStyle="Regular" timeTextSize="16" />
+                </calendar:CalendarMonthviewStyle.inlineEventCellStyle>
+              </calendar:CalendarMonthViewStyle>
+            </calendar:RadCalendar.monthViewStyle>
+          </calendar:RadCalendar>
+        </PullRefresh:PullToRefresh> <!-- Event view mode can be one of "None", "Inline" or "Popover" -->
+        <!-- Selection mode can be one of "None", "Single", "Multiple" or "Range" -->
+        <!-- View mode can be one of "Week", "Month", "MonthNames", "Year" or "Day" -->
+        <!-- Available transition modes
 		 http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/Calendar/transition-modes
 	 -->
-          <!-- For styling the calendar, please go through this part in the docs
+        <!-- For styling the calendar, please go through this part in the docs
 		 http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/Calendar/Styling/styling
 	 -->
-          <!-- You can write the event handlers in viewModel or in the codeBehind file -->
-          <!-- If you write in viewModel then you'd use {{ }} brackets to bind the method -->
-        </GridLayout>
+        <!-- You can write the event handlers in viewModel or in the codeBehind file -->
+        <!-- If you write in viewModel then you'd use {{ }} brackets to bind the method -->
         <GridLayout row="1" visibility="{{ visibility2 ? 'visible' : 'collapsed' }}" backgroundColor="green">
           <Label text="{{ 'The new selectedIndex is: ' + prop }}" class="m-15 h3 p-5 text-center" color="white" />
         </GridLayout>

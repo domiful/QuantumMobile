@@ -1,12 +1,14 @@
 const observable = require("data/observable");
 const pageData = new observable.Observable();
 const dialogs = require("tns-core-modules/ui/dialogs");
+const calendarModule = require("nativescript-ui-calendar");
+
 const nativescript_locate_address_1 = require("nativescript-locate-address");
 // phone dialer
 const platform = require("platform");
 const phone = require("nativescript-phone");
 const permissions = require("nativescript-permissions");
-const Kinvey = require("kinvey-nativescript-sdk").Kinvey;
+const Kinvey = require('kinvey-nativescript-sdk');
 
 // nav maps plugin
 var LocateAddress = require("nativescript-locate-address").LocateAddress;
@@ -161,8 +163,9 @@ function call(args) {
     var phnum = task.cell;
     //console.log("Ready to dial " + phnum);
     if (platform.isAndroid) {
-        permissions.requestPermission(android.Manifest.permission.CALL_PHONE, "App Needs This Permission To Make Phone Calls")
+        permissions.requestPermission(global.android.Manifest.permission.CALL_PHONE, "App Needs This Permission To Make Phone Calls")
             .then(function () {
+                console.log("permissions ");
                 phone.dial(String(phnum), false);
             })
             .catch(function () {
@@ -170,7 +173,8 @@ function call(args) {
             });
     }
     else {
-        phone.dial(String(phnum), false);
+        console.log("no permissions");
+        //phone.dial(String(phnum), false);
     }
 }
 exports.call = call;
@@ -189,6 +193,27 @@ function mailTo(args) {
         }).then(function (result) {}).catch(function (error) { return console.error(error); });
     }
 }
+
+function onDateSelected(args) {
+    console.log("onDateSelected: " + args.date);
+}
+
+function onDateDeselected(args) {
+    console.log("onDateDeselected: " + args.date);
+}
+
+function onNavigatedToDate(args) {
+    console.log("onNavigatedToDate: " + args.date);
+}
+
+function onNavigatingToDateStarted(args) {
+    console.log("onNavigatingToDateStarted: " + args.date);
+}
+
+function onViewModeChanged(args) {
+    console.log("onViewModeChanged: " + args.newValue);
+}
+
 exports.mailTo = mailTo;
 
 exports.onNavigatingTo = onNavigatingTo;
@@ -197,3 +222,8 @@ exports.onSignTap = onSignTap;
 exports.onCancel = onCancel;
 exports.showDrawpad = showDrawpad;
 exports.onAckTap = onAckTap;
+exports.onDateSelected = onDateSelected;
+exports.onDateDeselected = onDateDeselected;
+exports.onNavigatedToDate = onNavigatedToDate;
+exports.onNavigatingToDateStarted = onNavigatingToDateStarted;
+exports.onViewModeChanged = onViewModeChanged;

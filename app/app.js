@@ -1,5 +1,5 @@
-const application = require("tns-core-modules/application");
 const backendService = require("~/services/backend-service");
+const application = require("tns-core-modules/application");
 
 backendService.setup(); // Initialize Kinvey Backend
 application.run({ moduleName: "app-root" });

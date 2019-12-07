@@ -2,19 +2,18 @@
     <ActionBar class="action-bar" flat="true" title=""></ActionBar>
     <ScrollView isScrollEnabled="{{ scrollEnabled }}" class="under-action-bar coverImage">
         <AbsoluteLayout horizontalAlignment="stretch" width="100%">
-            <Gif:Gif left="0" top="240" src="https://drive.google.com/uc?id=19SuLCJ4wVOfPaf5urxzkuCOdmwaeiNPk" height="400" width="800" />
             <StackLayout width="100%" orientation="vertical" class="action-bar-title">
                 <Label text="Welcome back!" class="welcome"></Label>
                 <Repeater items="{{ items }}" itemTap="onItemTap">
                     <Repeater.itemTemplate>
-                        <Card:CardView class="home-card" elevation="6" radius="6" ios:shadowRadius="3">
+                        <Card:CardView class="home-card" elevation="6" radius="12" ios:shadowRadius="3">
                             <StackLayout>
-                                <GridLayout rows="250,*">
-                                    <StackLayout row="0" class="image-layout">
+                                <GridLayout columns="256,*">
+                                    <StackLayout col="1" class="image-layout">
                                         <Image src="https://avatars.servers.getgo.com/2205256774854474505_medium.jpg" stretch="aspectFit" />
                                     </StackLayout>
-                                    <StackLayout row="1" class="card-layout">
-                                        <Label class="h2" text="{{ name }}" />
+                                    <StackLayout col="0" class="card-layout">
+                                        <Label class="h3" text="{{ name }}" />
                                         <Label class="body" textWrap="true" text="{{ description }}" />
                                     </StackLayout>
                                 </GridLayout>
@@ -45,6 +44,38 @@
                     </StackLayout>
                 </GridLayout>
             </Card:CardView>!-->
+                <Label text=" " class="welcome"></Label>
+                <Label text="Details" class="welcome"></Label>
+                <Card:CardView class="home-card" elevation="6" radius="12" ios:shadowRadius="3" tap="onApptTap">
+                    <StackLayout class="home-widget">
+                        <StackLayout>
+                            <Label class="h2" text="Appointments" />
+                        </StackLayout>
+                        <GridLayout columns="80,*">
+                            <StackLayout col="0" class="image-layout">
+                                <Label class="fa widget-icon" textWrap="true" text="&#xf073;" />
+                            </StackLayout>
+                            <StackLayout col="1" class="card-layout">
+                                <Label class="widget-text" textWrap="true" text="{{ appointments }}" />
+                            </StackLayout>
+                        </GridLayout>
+                    </StackLayout>
+                </Card:CardView>
+                <Card:CardView class="home-card" elevation="6" radius="12" ios:shadowRadius="3" tap="onPartsTap">
+                    <StackLayout class="home-widget">
+                        <StackLayout>
+                            <Label class="h2" text="Parts" />
+                        </StackLayout>
+                        <GridLayout columns="80,*">
+                            <StackLayout col="0" class="image-layout">
+                                <Label class="fa widget-icon" textWrap="true" text="&#xf0ad;" />
+                            </StackLayout>
+                            <StackLayout col="1" class="card-layout">
+                                <Label class="widget-text" textWrap="true" text="6 parts available" />
+                            </StackLayout>
+                        </GridLayout>
+                    </StackLayout>
+                </Card:CardView>
             </StackLayout>
         </AbsoluteLayout>
     </ScrollView>

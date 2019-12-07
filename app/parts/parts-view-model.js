@@ -1,5 +1,5 @@
 const observableModule = require("tns-core-modules/data/observable");
-const Kinvey = require("kinvey-nativescript-sdk").Kinvey;
+const Kinvey = require('kinvey-nativescript-sdk');
 const segmentedBarModule = require("tns-core-modules/ui/segmented-bar");
 
 function PartsViewModel() {
@@ -14,6 +14,7 @@ function PartsViewModel() {
         }],
         filterSegment: 'collapsed',
         sbSelectedIndex: 0,
+        sbItems: [],
         onNavigatedTo: function () {
             const dataStore = Kinvey.DataStore.collection("items", Kinvey.DataStoreType.Sync);
 
@@ -130,6 +131,8 @@ function PartsViewModel() {
                         newEnt["weight"] = ent["Weight"];
                         newEnt["stock"] = ent["OnHand"];
                         newEnt["price"] = `$${parseFloat(Math.round(ent["Price"] * 100) / 100).toFixed(2)}`;
+
+                        if (!that.sbItems.includes(ent["Category2"])) that.sbItems.push(ent["Category2"]);
 
                         return newEnt;
                     });

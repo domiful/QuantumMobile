@@ -1,4 +1,4 @@
-<Page class="page" navigatingTo="onNavigatingTo" xmlns="http://schemas.nativescript.org/tns.xsd" xmlns:DrawingPad="nativescript-drawingpad">
+<Page class="page" navigatingTo="onNavigatingTo" xmlns="http://schemas.nativescript.org/tns.xsd" xmlns:DrawingPad="nativescript-drawingpad" xmlns:calendar="nativescript-ui-calendar">
     <ActionBar class="action-bar" flat="true">
         <NavigationButton tap="onBackButtonTap" android.systemIcon="ic_menu_back" />
         <Label class="action-bar-title" text="Appointment" horizontalAlignment="center" />
@@ -6,9 +6,20 @@
     <GridLayout class="page-content">
         <ScrollView>
             <StackLayout>
-                <GridLayout rows="auto, auto, auto, auto" visibility="{{ showAbove ? 'visible' : 'collapsed' }}">
+                <GridLayout rows="auto,240, auto, auto, auto" visibility="{{ showAbove ? 'visible' : 'collapsed' }}">
                     <Label text="{{cal.data.issue}}" class="prodTitle" textWrap="true"></Label>
-                    <Button row="1" text="Acknowledge" class="requestButton" tap="onAckTap" />
+                    <calendar:RadCalendar row="1" id="eventCalendar" eventSource="{{ cal.data.eventX }}" eventsViewMode="Inline" selectionMode="Single" viewMode="Day" transitionMode="Stack" locale="en-US" dateSelected="{{onDateSelected}}" dateDeselected="onDateDeselected" inlineEventSelected="{{onNavigatedToDate}}" navigatingToDateStarted="onNavigatingToDateStarted" viewModeChanged="onViewModeChanged">
+                        <calendar:RadCalendar.monthViewStyle>
+                            <calendar:CalendarMonthViewStyle backgroundColor="#8C8F91" showTitle="true" showWeekNumbers="false" showDayNames="true" selectionShapeColor="#00B4C9">
+                                <calendar:CalendarMonthViewStyle.dayCellStyle>
+                                    <calendar:DayCellStyle showEventsText="true" eventTextColor="#00B4C9" cellTextColor="#00B4C9" eventFontName="Times New Roman" eventFontStyle="BoldItalic" eventTextSize="8" ios:cellTextSize="12" android:cellTextSize="10" />
+                                </calendar:CalendarMonthViewStyle.dayCellStyle>
+                                <calendar:CalendarMonthviewStyle.inlineEventCellStyle>
+                                    <calendar:InlineEventCellStyle cellBackgroundColor="#E9E9E9" eventTextColor="#00B4C9" eventFontName="Avenir" eventFontStyle="BoldItalic" eventTextSize="14" timeTextColor="DeepSkyBlue" timeFontName="Courier" timeFontStyle="Regular" timeTextSize="16" />
+                                </calendar:CalendarMonthviewStyle.inlineEventCellStyle>
+                            </calendar:CalendarMonthViewStyle>
+                        </calendar:RadCalendar.monthViewStyle>
+                    </calendar:RadCalendar>
                     <GridLayout row="2" rows="*, *, *, *, *, *, *, *, *, *, *" columns="auto,auto">
                         <Label text="Customer" class="p-l-15 p-b-10 m-r-20 text-secondary font-weight-bold" />
                         <Label text="{{ cal.data.cust }}" row="0" col="1" class="text p-b-10" />
@@ -25,7 +36,12 @@
                         <Label text="{{ cal.data.city}}" row="6" col="1" class="text p-b-10" color="blue" tap="onTapAddress" />
                         <Label text="{{ cal.data.zip }}" row="7" col="1" class="text p-b-10" color="blue" tap="onTapAddress" />
                     </GridLayout>
-                    <Button row="3" text="Sign &amp; Close" class="requestButton" tap="showDrawpad" />
+                    <GridLayout row="3" rows="*" columns="*,*">
+                        <Button col="1" text="Sign &amp; Close" class="requestButton" tap="showDrawpad" />
+                        <Button col="0" text="Acknowledge" class="requestButton" tap="onAckTap" />
+                    </GridLayout>
+
+
                 </GridLayout>
                 <StackLayout class="draw" row="3" visibility="{{ showDP ? 'visible' : 'collapsed' }}">
                     <Label class="h2" textWrap="true" text="By signing here, I agree that the service was performed to my satisfaction."></Label>

@@ -1,4 +1,4 @@
-const Kinvey = require("kinvey-nativescript-sdk").Kinvey;
+const Kinvey = require('kinvey-nativescript-sdk');
 const push = require("kinvey-nativescript-sdk/push");
 
 function handleErrors(error) {
@@ -56,6 +56,3 @@ exports.resetPassword = function (email) {
     return Kinvey.User.resetPassword(email)
         .catch(handleErrors);
 }
-
-exports
-var push_1 = require("kinvey-nativescript-sdk/push");

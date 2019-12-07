@@ -7,14 +7,16 @@
 $background-dark: #F8F8F8 !default;
 $background-light: #FFFFFF !default;
 
-$blue-dark: #022734 !default;
-$blue-light: #02556E !default;
+$blue-dark: rgb(10, 127, 139);
+$blue-light: #8C8F91;
 $blue-50: rgba($blue-dark, 0.5) !default;
 $blue-20: rgba($blue-dark, 0.2) !default;
 $blue-10: rgba($blue-dark, 0.1) !default;
 
-$accent-dark: #448ef6 !default;
-$accent-light: #005792 !default;
+$accent-dark: #06B5CA !default;
+$accent-light: #8C8F91 !default;
+$accent: $accent-dark !default;
+
 
 $success-dark: #06CE6A !default;
 $success-light: #00E676 !default;

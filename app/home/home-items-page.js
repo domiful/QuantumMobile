@@ -1,7 +1,7 @@
 const frameModule = require("tns-core-modules/ui/frame");
 const HomeItemsViewModel = require("./home-items-view-model");
 const topmost = require("ui/frame").topmost;
-const Kinvey = require('kinvey-nativescript-sdk').Kinvey;
+const Kinvey = require('kinvey-nativescript-sdk');
 const Kpush = require("kinvey-nativescript-sdk/push");
 const dialogs = require("tns-core-modules/ui/dialogs");
 const nativescript_locate_address_1 = require("nativescript-locate-address");
@@ -34,57 +34,59 @@ function onNavigatingTo(args) {
         .catch(e => { /* handle error */ });
 
     let activeUser = Kinvey.User.getActiveUser();
-    console.log(activeUser);
+    //console.log("active user: " + activeUser.username);
 
     //register for push notifications
-    Kpush.Push.register({
-            android: {
-                senderID: '390861799348'
-            },
-            ios: {
-                alert: true,
-                badge: true,
-                sound: true
-            }
-        })
-        .then(function (deviceToken) {
-            //alert("Device registered for push notifications.");
-            console.log("Device registered for push.  Access token: " + deviceToken);
-        })
-        .catch(function (error) {
-            //alert("Error: " + error);
-            console.log("Error: " + error);
-        });
-    // this will throw up a push notification in an alert box whenever one is received from Kinvey
-    Kpush.Push.onNotification(function (data) {
-        dialogs.confirm({
-            title: data.type,
-            message: data.body,
-            okButtonText: "Let's Go",
-            cancelButtonText: "Cancel",
-        }).then(function (result) {
-            if (result) {
-                var locator = new nativescript_locate_address_1.LocateAddress();
-                locator.locate({
-                    address: "6904 n academy blvd, colorado springs, co 80920",
-                }).then(function () {
-                    //console.log("Maps app launched.");
-                }, function (error) {
-                    console.log(error);
-                });
-            }
-            console.log("Dialog result: " + result);
-        });
-    });
-
+    /* Kpush.Push.register({
+             android: {
+                 senderID: '390861799348'
+             },
+             ios: {
+                 alert: true,
+                 badge: true,
+                 sound: true
+             }
+         })
+         .then(function (deviceToken) {
+             //alert("Device registered for push notifications.");
+             console.log("Device registered for push.  Access token: " + deviceToken);
+         })
+         .catch(function (error) {
+             //alert("Error: " + error);
+             console.log("Error: " + error);
+         });
+     // this will throw up a push notification in an alert box whenever one is received from Kinvey
+     Kpush.Push.onNotification(function (data) {
+         dialogs.confirm({
+             title: data.type,
+             message: data.body,
+             okButtonText: "Let's Go",
+             cancelButtonText: "Cancel",
+         }).then(function (result) {
+             if (result) {
+                 var locator = new nativescript_locate_address_1.LocateAddress();
+                 locator.locate({
+                     address: "6904 n academy blvd, colorado springs, co 80920",
+                 }).then(function () {
+                     //console.log("Maps app launched.");
+                 }, function (error) {
+                     console.log(error);
+                 });
+             }
+             console.log("Dialog result: " + result);
+         });
+     });
+     */
     if (!activeUser) {
 
         topmost().navigate("login/login-page");
     }
     else {
         //source.set("items", { "name": activeUser });
+        console.log("active user: " + activeUser);
         component.bindingContext = new HomeItemsViewModel();
     }
+
 }
 
 function onItemTap(args) {
@@ -102,6 +104,17 @@ function onItemTap(args) {
             curve: "ease"
         }
     });
+}
+
+function onPartsTap(args) {
+    const tabView = topmost().parent.parent;
+    tabView.selectedIndex = 2;
+
+}
+
+function onApptTap(args) {
+    const tabView = topmost().parent.parent;
+    tabView.selectedIndex = 1;
 }
 
 function onTap(args) {
@@ -127,5 +140,7 @@ function logOut() {
 
 exports.logOut = logOut;
 exports.onItemTap = onItemTap;
+exports.onPartsTap = onPartsTap;
+exports.onApptTap = onApptTap;
 exports.onNavigatingTo = onNavigatingTo;
 exports.onTap = onTap;

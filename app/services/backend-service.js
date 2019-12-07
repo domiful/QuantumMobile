@@ -1,6 +1,6 @@
-const Kinvey = require("kinvey-nativescript-sdk").Kinvey;
-const kinveyAppKey = "kid_SJOST_NHV";
-const kinveyAppSecret = "0660252a25a046148553de8914ac0468";
+const Kinvey = require('kinvey-nativescript-sdk');
+const kinveyAppKey = "kid_rkSgueyLB";
+const kinveyAppSecret = "7d88554d2ad242a08e0e079056a39139";
 const kinveyUsername = "admin";
 const kinveyPassword = "admin";
 
